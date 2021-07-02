@@ -3,7 +3,7 @@ This is the repository for the level up society &amp; gamification hackathon run
 
 
 # Main guy
-Zoya 
+Qudus 
 
 # Underlings 
-Qudus Gwyds Adi Dulcie
+Zoya Gwyds Adi Dulcie
