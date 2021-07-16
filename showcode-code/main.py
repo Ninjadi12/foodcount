@@ -4,8 +4,8 @@ import sqlite3 as sql
 app = Flask(__name__)
 
 @app.route("/")
-def hello_world():
-    return "<p>Hello, World!</p>"
+def main():
+    return render_template('base.html')
 
 @app.route('/signup')
 def new_user():
