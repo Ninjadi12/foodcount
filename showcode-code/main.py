@@ -7,30 +7,30 @@ app = Flask(__name__)
 def main():
     return render_template('base.html')
 
-@app.route('/signup')
-def new_user():
-    return render_template('auth/register.html')
+# @app.route('/signup')
+# def new_user():
+#     return render_template('auth/register.html')
 
-@app.route('/addrec',methods = ['POST', 'GET'])
-def addrec():
-   if request.method == 'POST':
-      try:
-         nm = request.form['nm']
-         psw = request.form['psw']
+# @app.route('/addrec',methods = ['POST', 'GET'])
+# def addrec():
+#    if request.method == 'POST':
+#       try:
+#          nm = request.form['nm']
+#          psw = request.form['psw']
          
-         with sql.connect("database.db") as con:
-            cur = con.cursor()
-            cur.execute("INSERT INTO USERS (name,password) VALUES (?,?)",(nm,psw) )
+#          with sql.connect("database.db") as con:
+#             cur = con.cursor()
+#             cur.execute("INSERT INTO USERS (name,password) VALUES (?,?)",(nm,psw) )
             
-            con.commit()
-            msg = "Record successfully added"
-      except:
-         con.rollback()
-         msg = "error in insert operation"
+#             con.commit()
+#             msg = "Record successfully added"
+#       except:
+#          con.rollback()
+#          msg = "error in insert operation"
       
-      finally:
-         return "<p>Hello, World!</p>"
-         con.close()
+#       finally:
+#          return "<p>Hello, World!</p>"
+#          con.close()
 
 if __name__ == '__main__':
    app.run(debug = True)
