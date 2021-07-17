@@ -14,6 +14,12 @@
     <div class="content-row">
         <img src="{{logo}}" class="mx-auto" style="height: 18vh; width: auto">
     </div>
+    <div class="content-row">
+        <a href="{{url_for('auth.login')}}" id="login-button" class="btn btn-primary" role="button">Log in</a>
+    </div>
+    <div class="content-row">
+        <a href="{{url_for('auth.login')}}" id="login-button" class="btn btn-primary" role="button">Register</a>
+    </div>
 </div>
 
 {%endblock content%}
