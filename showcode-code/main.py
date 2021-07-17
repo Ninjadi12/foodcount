@@ -11,10 +11,10 @@ def main():
 # def new_user():
 #     return render_template('auth/register.html')
 
-# ##TEMP##
-# @app.route('/')
-# def main():
-#     return render_template('homepage.html', title = "Home")
+##TEMP##
+@app.route('/home')
+def main():
+    return render_template('homepage.html', title = "Home")
 
 # @app.route('/addrec',methods = ['POST', 'GET'])
 # def addrec():
