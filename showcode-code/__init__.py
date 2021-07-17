@@ -29,9 +29,14 @@ def create_app(test_config=None):
 
     from . import auth
     app.register_blueprint(auth.bp)
-    app.add_url_rule('/', endpoint='home')
+    #app.add_url_rule('/', endpoint='main')
+    
     @app.route('/home')
     def home():
         return render_template('homepage.html', title = "Home")
+
+    @app.route('/')
+    def main():
+        return render_template("initial.html", title = "FUCounter")
 
     return app

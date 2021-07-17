@@ -8,7 +8,7 @@
     background-color: pink; 
 }
 
-#initial .dashboard{
+#initial .container{
     flex-direction: columnn;
     background-color: --greenish;
 }
