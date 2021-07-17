@@ -13,7 +13,7 @@ def main():
 
 ##TEMP##
 @app.route('/home')
-def main():
+def home():
     return render_template('homepage.html', title = "Home")
 
 # @app.route('/addrec',methods = ['POST', 'GET'])

@@ -1,0 +1,16 @@
+:root{
+    --greenish : rgb(76, 175, 80);
+}
+
+.test{
+    width:150px;
+    height:150px;
+    background-color: pink; 
+}
+
+#initial{
+    flex-direction: column;
+    &.dashboard{
+
+    }
+}
