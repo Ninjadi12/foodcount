@@ -41,8 +41,4 @@ def create_app(test_config=None):
     def main():
         return render_template("initial.html", title = "FUCounter")
 
-    @app.route('/list')
-    def list():
-        return render_template("/carboncalc/list.html", title = "Shopping List")
-
     return app
