@@ -31,15 +31,10 @@ def create_app(test_config=None):
     from . import db
     db.init_app(app)
 
-    from . import auth
+    from . import auth, carboncalc, user
     app.register_blueprint(auth.bp)
-    
-    from . import carboncalc
     app.register_blueprint(carboncalc.bp)
-    
-    @app.route('/home')
-    def home():
-        return render_template('homepage.html', title = "Home")
+    app.register_blueprint(user.bp)
 
     @app.route('/')
     def main():

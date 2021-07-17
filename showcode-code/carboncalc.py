@@ -23,3 +23,8 @@ def leaderboard():
 @login_required
 def list():
     return render_template("carboncalc/list.html", title = "Shopping List")
+
+@bp.route('/home')
+@login_required
+def home():
+    return render_template('homepage.html', title = "Home")
