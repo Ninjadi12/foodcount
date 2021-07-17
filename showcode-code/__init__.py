@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, render_template
+from flask import Flask, render_template, url_for
 
 picFolder = os.path.join('static', 'pics')
 
@@ -45,4 +45,5 @@ def create_app(test_config=None):
     def main():
         pic1 = os.path.join(app.config['UPLOAD_FOLDER'], 'logo.png')
         return render_template("initial.html", title = "FUCounter", logo = pic1)
+    
     return app
