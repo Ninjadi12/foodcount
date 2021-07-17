@@ -42,7 +42,7 @@ def create_app(test_config=None):
         return render_template('/carboncalc/list.html', title = "Shopping List")
 
     @app.route('/')
-    @app.route('initial')
+    @app.route('/initial')
     def main():
         pic1 = os.path.join(app.config['UPLOAD_FOLDER'], 'logo.png')
         return render_template("initial.html", title = "FUCounter", logo = pic1)
