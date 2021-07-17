@@ -29,7 +29,9 @@ def create_app(test_config=None):
 
     from . import auth
     app.register_blueprint(auth.bp)
-    #app.add_url_rule('/', endpoint='main')
+    
+    from . import carboncalc
+    app.register_blueprint(carboncalc.bp)
     
     @app.route('/home')
     def home():
