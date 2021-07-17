@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request
-from flask_bootstrap import Bootstrap
 import sqlite3 as sql
 
 app = Flask(__name__)
@@ -11,6 +10,11 @@ def main():
 # @app.route('/signup')
 # def new_user():
 #     return render_template('auth/register.html')
+
+# ##TEMP##
+# @app.route('/')
+# def main():
+#     return render_template('homepage.html', title = "Home")
 
 # @app.route('/addrec',methods = ['POST', 'GET'])
 # def addrec():
