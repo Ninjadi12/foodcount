@@ -78,7 +78,8 @@ function update() {
 
 <body onload="setup_box()">
     {% block new %}
-    <div id="new-ingredient" width=30%>
+    <div id="list-container">
+    <div id="new-ingredient">
         <h2>New Ingredient</h2>
         <form name="f">
             <table>
@@ -112,9 +113,10 @@ function update() {
         </form>
     </div>
 
-    <div id="list" width=30%>
+    <div id="list" >
         <h2>Shopping List</h2>
 
+    </div>
     </div>
     {% endblock %}
     <!-- BS4 Dependencies and JS -->
