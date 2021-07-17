@@ -28,8 +28,8 @@ def register():
 
         if error is None:
             db.execute(
-                'INSERT INTO USERS (username, password) VALUES (?, ?)',
-                (username, generate_password_hash(password))
+                'INSERT INTO USERS (username, password, carboncost, carbonsaved) VALUES (?, ?, ?, ?)',
+                (username, generate_password_hash(password), 0.0, 0.0)
             )
             db.commit()
             return redirect(url_for('auth.login'))

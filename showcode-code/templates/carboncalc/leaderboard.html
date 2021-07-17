@@ -1,0 +1,21 @@
+{% extends 'base.html'%}
+
+{%block content%}
+<h1>Leaderboard</h1>
+
+<table>
+    <tr>
+        <th>User</th>
+        <th>Carbon used</th>
+        <th>Carbon saved</th>
+    </tr>
+    {% for row in standings %}
+        <tr>
+            <td>{{item['username']}}</td>
+            <td>{{item['carboncost']}}</td>
+            <td>{{item['carbonsaved']}}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+{%endblock content%}

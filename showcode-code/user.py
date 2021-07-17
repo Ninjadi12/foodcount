@@ -12,7 +12,7 @@ bp = Blueprint('user', __name__, url_prefix='/user')
 def history():
     db = get_db()
     history_ids = list(g["history"])
-    history = db.execute("SELECT ingredients, carboncost, carbonsaved FROM RECIPES WHERE id IN ?", (history_ids))
+    history = db.execute("SELECT ingredients, carboncost, carbonsaved FROM RECIPES WHERE id IN (?)", (history_ids))
     render_template("carbonhistory.html", recipes=history)
 
 @bp.route("/")
