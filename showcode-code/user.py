@@ -10,9 +10,12 @@ bp = Blueprint('user', __name__, url_prefix='/user')
 @bp.route("/history")
 @login_required
 def history():
-    render_template("carbonhistory.html")
+    db = get_db()
+    history_ids = list(g["history"])
+    history = db.execute("SELECT ingredients, carboncost, carbonsaved FROM RECIPES WHERE id IN ?", (history_ids))
+    render_template("carbonhistory.html", recipes=history)
 
 @bp.route("/")
 @login_required
 def user_info():
-    render_template("viewuser.html")
+    render_template("viewuser.html", user=g)
