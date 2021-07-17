@@ -2,10 +2,23 @@
     --greenish : rgb(165, 190, 166);
 }
 
+.btn-primary {
+    background-color: rgb(69,27,4);
+    border-color: rgb(31, 12, 2);
+}
+
 #login-button{
-    color: rgb(69,27,4);
+    color: white;
     margin-top: 5vh;
-    width: 30vh;
+    width:20vh;
+    padding: 7px 10px; 
+    border-radius: 25px;
+}
+
+#register-button{
+    color: rgb(255, 255, 255);
+    margin-top: 1vh;
+    width: 20vh;
     padding: 7px 10px; 
     border-radius: 25px;
 }
