@@ -28,8 +28,8 @@ def register():
 
         if error is None:
             db.execute(
-                'INSERT INTO USERS (username, password) VALUES (?, ?)',
-                (username, generate_password_hash(password))
+                'INSERT INTO USERS (username, password, carboncost, carbonsaved) VALUES (?, ?, ?, ?)',
+                (username, generate_password_hash(password), 0.0, 0.0)
             )
             db.commit()
             return redirect(url_for('auth.login'))
@@ -57,7 +57,7 @@ def login():
         if error is None:
             session.clear()
             session['user_id'] = user['id']
-            return redirect(url_for('index'))
+            return redirect(url_for('initial'))
 
         flash(error)
 
@@ -77,7 +77,7 @@ def load_logged_in_user():
 @bp.route('/logout')
 def logout():
     session.clear()
-    return redirect(url_for('index'))
+    return redirect(url_for('initial'))
 
 def login_required(view):
     @functools.wraps(view)

@@ -15,7 +15,7 @@ bp = Blueprint('carboncalc', __name__, url_prefix='/carboncalc')
 @login_required
 def leaderboard():
     db = get_db()
-    standings = db.execute('SELECT username, carbonsaved ORDERBY carbonsaved DESC LIMIT 10').fetchall()
+    standings = db.execute('SELECT username, carboncost, carbonsaved ORDERBY carbonsaved DESC LIMIT 10').fetchall()
     requests.post("https://test.eaternity.ch/api/", headers = {"authorization": "Basic aDRjSzR0SDBOT2c3NUhqZkszMzlLbE9scGEzOWZKenhYdw==", "Content-Type":"application/json"})
     return render_template("carboncalc/leaderboard.html", standings=standings)
 
@@ -23,3 +23,8 @@ def leaderboard():
 @login_required
 def list():
     return render_template("carboncalc/list.html", title = "Shopping List")
+
+@bp.route('/home')
+@login_required
+def home():
+    return render_template('homepage.html', title = "Home")
