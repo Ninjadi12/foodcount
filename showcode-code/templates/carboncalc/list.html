@@ -20,8 +20,33 @@
 
 <body>
     {% block new %}
-    <div id="new-ingredient">
+    <div id="new-ingredient" width=30%>
         <h2>New Ingredient</h2>
+        <form>
+            <table>
+            <tr>
+                <td><label for="name">Name</label></td>
+                <td><input type="text" id="name"></input></td>
+            </tr>
+            <tr>
+                <td><label for="quantity">Amount</label></td>
+                <td><input type="number" min="0" max="1000000" id="quantity"></input>
+                    <select id="quantity">
+                        <option value="g">g</option>
+                        <option value="kg">kg</option>
+                        <option value="ml">ml</option>
+                        <option value="l">l</option>
+                    </select></td>
+            </tr>
+            <tr><td  style="text-align: center"><input type="submit" value="Submit"></td></tr>
+            
+            </table>
+        </form>
+    </div>
+
+    <div id="list" width=30%>
+        <h2>Shopping List</h2>
+
     </div>
     {% endblock %}
     <!-- BS4 Dependencies and JS -->
