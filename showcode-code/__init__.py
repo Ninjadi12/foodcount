@@ -36,7 +36,8 @@ def create_app(test_config=None):
     app.register_blueprint(carboncalc.bp)
     app.register_blueprint(user.bp)
 
-    @app.route('initial')
+    @app.route('/')
+    @app.route('/initial')
     def main():
         pic1 = os.path.join(app.config['UPLOAD_FOLDER'], 'logo.png')
         return render_template("initial.html", title = "FUCounter", logo = pic1)
