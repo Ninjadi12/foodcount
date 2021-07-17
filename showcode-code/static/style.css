@@ -2,13 +2,24 @@
     --greenish : rgb(76, 175, 80);
 }
 
-.test{
-    width:150px;
-    height:150px;
-    background-color: pink; 
+
+
+.fill{
+    min-height: 100%; 
 }
 
-#initial .container{
-    flex-direction: columnn;
-    background-color: --greenish;
+.initial .dashboard{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1 0 auto;
+}
+.content-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+body {
+    background:var(--greenish);
 }

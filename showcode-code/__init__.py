@@ -2,6 +2,9 @@ import os
 
 from flask import Flask, render_template
 
+picFolder = os.path.join('static', 'pics')
+
+
 
 def create_app(test_config=None):
     # create and configure the app
@@ -24,6 +27,7 @@ def create_app(test_config=None):
     except OSError:
         pass
     
+    app.config['UPLOAD_FOLDER'] = picFolder
     from . import db
     db.init_app(app)
 
@@ -39,10 +43,6 @@ def create_app(test_config=None):
 
     @app.route('/')
     def main():
-        return render_template("initial.html", title = "FUCounter")
-
-    @app.route('/list')
-    def list():
-        return render_template("/carboncalc/list.html", title = "Shopping List")
-
+        pic1 = os.path.join(app.config['UPLOAD_FOLDER'], 'logo.png')
+        return render_template("initial.html", title = "FUCounter", logo = pic1)
     return app
