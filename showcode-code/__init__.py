@@ -1,7 +1,6 @@
 import os
 
 from flask import Flask, render_template, url_for
-
 picFolder = os.path.join('static', 'pics')
 
 
