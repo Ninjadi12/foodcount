@@ -18,15 +18,83 @@
     <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
 </head>
 
-<body>
+<script>
+var foods = {
+    "Beans & Pulses": ["not implemented"],
+    "Dairy": ["Butter", "Cheddar Cheese", "Cows' Milk", "Eggs", "Yoghurt"],
+    "Fruit": ["Apples", "Apricots", "Bananas", "Blackberries", "Blueberries", "Cherries", "Grapes", "Mangos", "Oranges", "Peaches", "Raspberries", "Strawberries"],
+    "Grains": ["Oats", "White Rice", "Brown Rice"],
+    "Meat & Seafood": ["Beef", "Chicken", "Lamb", "Pork", "Turkey"],
+    "Nuts & Seeds": ["Almonds", "Pecans", "Pistachios", "Walnuts"],
+    "Processed Foods": ["Coffee", "Ice Cream", "Pasta", "Peanut Butter", "Tofu"],
+    "Vegetables": ["Broccoli", "Cabbage", "Carrots", "Cucumbers", "Lettuce", "Onions", "Peppers", "Spinach", "Tomatoes"]
+}
+
+var selected_type = "Fruit";
+var selected_food="Apples";
+
+function setup_box() {
+    var keys = Object.keys(foods);
+    var type_box = document.getElementById("type");
+    type_box.innerHTML = "";
+    for (var i = 0; i < keys.length; i++) {
+        type_box.innerHTML += "<option value=" + keys[i] + ">" + keys[i] + " </option>";   
+    }
+    type_box.selectedIndex = 1;
+
+    var names = foods[keys[type_box.selectedIndex]];
+    var name_box = document.getElementById("name");
+    name_box.innerHTML = "";
+    for (var i = 0; i < names.length; i++) {
+        name_box.innerHTML += "<option value=" + names[i] + ">" + names[i] + " </option>";   
+    }
+
+
+}
+
+function update() {
+    var keys = Object.keys(foods);
+    var type_box = document.getElementById("type");
+    var selected = type_box.selectedIndex;
+    type_box.innerHTML = "";
+    for (var i = 0; i < keys.length; i++) {
+        if (selected == i) {
+            type_box.innerHTML += "<option value=" + keys[i] + "selected=\"selected\">" + keys[i] + "</option>";   
+            var previous = i;
+        } else {
+            type_box.innerHTML += "<option value=" + keys[i] + ">" + keys[i] + " </option>";   
+        }
+    }
+    type_box.selectedIndex = previous;
+
+    var names = foods[keys[type_box.selectedIndex]];
+    var name_box = document.getElementById("name");
+    name_box.innerHTML = "";
+    for (var i = 0; i < names.length; i++) {
+        name_box.innerHTML += "<option value=" + names[i] + ">" + names[i] + " </option>";   
+    }
+}
+</script>
+
+<body onload="setup_box()">
     {% block new %}
     <div id="new-ingredient" width=30%>
         <h2>New Ingredient</h2>
-        <form>
+        <form name="f">
             <table>
             <tr>
-                <td><label for="name">Name</label></td>
-                <td><input type="text" id="name"></input></td>
+                <td><label for="type">Food</label></td>
+                <td>
+                    <select id="type"  onchange="update()" >
+    
+
+                    </select>
+                
+                    <select id="name">
+
+                    </select>
+                </td>
+                    
             </tr>
             <tr>
                 <td><label for="quantity">Amount</label></td>

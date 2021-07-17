@@ -1,5 +1,22 @@
-<html>
-   <body>
+{% extends 'base.html'%}
 
-   </body>
-</html>
+{%block content%}
+<div class="content-row">
+    <form method="POST">
+        <div class="form-group">
+        <label for="exampleInputEmail1">Enter Username</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Username">
+        <small id="emailHelp" class="form-text text-muted">We will share your username with everyone else.</small>
+        </div>
+        <div class="form-group">
+        <label for="exampleInputPassword1">Enter Password</label>
+        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Enter Password">
+        </div>
+        <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+         <label class="form-check-label" for="exampleCheck1">I'm not a robot</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{%endblock content%}
