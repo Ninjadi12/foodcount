@@ -36,11 +36,6 @@ def create_app(test_config=None):
     app.register_blueprint(carboncalc.bp)
     app.register_blueprint(user.bp)
 
-    @app.route('/list')
-    def list():
-
-        return render_template('/carboncalc/list.html', title = "Shopping List")
-
     @app.route('/')
     @app.route('/initial')
     def main():
