@@ -41,6 +41,11 @@ def create_app(test_config=None):
     def home():
         return render_template('homepage.html', title = "Home")
 
+    @app.route('/list')
+    def list():
+
+        return render_template('/carboncalc/list.html', title = "Shopping List")
+
     @app.route('/')
     def main():
         pic1 = os.path.join(app.config['UPLOAD_FOLDER'], 'logo.png')
