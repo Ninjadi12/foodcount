@@ -1,8 +1,14 @@
 :root{
-    --greenish : rgb(76, 175, 80);
+    --greenish : rgb(165, 190, 166);
 }
 
-
+#login-button{
+    color: rgb(69,27,4);
+    margin-top: 5vh;
+    width: 30vh;
+    padding: 7px 10px; 
+    border-radius: 25px;
+}
 
 .fill{
     min-height: 100%; 
@@ -21,9 +27,9 @@
 }
 
 body {
+    display:flex;
     min-height: 100%;
-    background:var(--greenish);
-    display: flex;
+    background: var(--greenish);
 }
 
 html {
