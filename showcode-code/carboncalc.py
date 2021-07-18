@@ -39,9 +39,9 @@ co2 = {
     "White Rice": 2.7,
     "Brown Rice": 2.16,
     "Chickpeas": 0.64,
-    "Peas", 0.29,
+    "Peas": 0.29,
     "Yoghurt": 2.2,
-    
+
 }
 
 alternatives = {
