@@ -81,7 +81,7 @@ def add_food():
             (food_type, food_name, quantity, food_co2,  user_id)
         )
 
-        db.execute(f'UPDATE USERS SET carboncost = {get_avg_carbon()} WHERE id = {user_id}')
+        db.execute(f'UPDATE USERS SET carboncost = {get_avg_carbon()} WHERE id = \"{user_id}\"')
         db.commit()
     return error
 
@@ -93,8 +93,7 @@ def use_alternative():
     
     # doesn't work with multiple items of same type!
     original_ingredient = request.form['foodname']
-    print(original_ingredient)
-    original = db.execute(f"SELECT * FROM INGREDIENTS WHERE userid = {user_id} AND foodname = \"{original_ingredient}\"").fetchall()
+    original = db.execute(f"SELECT * FROM INGREDIENTS WHERE userid = \"{user_id}\" AND foodname = \"{original_ingredient}\"").fetchall()[0]
     alternative = alternatives[original_ingredient]
     alternative_co2 = co2[alternative] * int(original["quantity"])
     return (1 - (co2[original_ingredient] * int(original["quantity"]) / alternative_co2)) * 100
@@ -103,9 +102,9 @@ def use_alternative():
 
     # doesn't work with alternative being different type
     # alternative must have carbon implemented!
-    db.execute(f'UPDATE INGREDIENTS SET foodname = {alternative}, carboncost = {alternative_co2} WHERE id = {user_id}')
-    originalcarbon = db.execute(f"SELECT carboncost FROM USERS WHERE userid = {user_id}").fetchall()
-    db.execute(f'UPDATE USERS SET carbonsaved = {original["carboncost"] - alternative_co2}, carboncost = {originalcarbon - original["carboncost"] + alternative_co2} WHERE id = {user_id}')
+    db.execute(f'UPDATE INGREDIENTS SET foodname = \"{alternative}\", carboncost = {alternative_co2} WHERE id = \"{user_id}\"')
+    originalcarbon = db.execute(f"SELECT carboncost FROM USERS WHERE id = \"{user_id}\"").fetchall()[0]['carboncost']
+    db.execute(f'UPDATE USERS SET carbonsaved = {original_co2 - alternative_co2}, carboncost = {originalcarbon - original_co2 + alternative_co2} WHERE id = \"{user_id}\"')
 
     db.commit()    
 
