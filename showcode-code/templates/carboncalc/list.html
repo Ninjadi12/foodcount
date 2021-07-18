@@ -135,7 +135,7 @@ function update() {
 
     <div id="list" >
         <h2>Shopping List</h2>
-        <table class="styled-table">
+        <table>
             <tr style="font-weight: bold">
                 <td>Ingredient</td>
                 <td>Quantity (g)</td>
@@ -154,10 +154,8 @@ function update() {
                 <td><form method="post", name="a"><input type="submit" value="Use Alternative" name="Use_Alternative"/><input type="text" name="foodname" hidden value="{{item['foodname']}}"/><input type="text" name="id" hidden value="{{item['id']}}"/><input type="text" name="type" hidden value="change"/></form></td>
                 {% elif item["id"] == id %}
                 <td></td>
-                <td></td>
                 <td>{{"%.2f" %(saving)}}</td>
                 {% else %}
-                <td></td>
                 <td></td>
                 <td></td>
                 {% endif %}
