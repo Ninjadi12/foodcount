@@ -80,4 +80,4 @@ def list():
 @bp.route('/home')
 @login_required
 def home():
-    return render_template('homepage.html', title = "Home")
+    return render_template('carboncalc/homepage.html', title = "Home")
