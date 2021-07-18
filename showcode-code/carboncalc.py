@@ -101,7 +101,7 @@ def use_alternative():
 
     # doesn't work with alternative being different type
     # alternative must have carbon implemented!
-    db.execute(f'UPDATE INGREDIENTS SET foodname = \"{alternative}\", carboncost = {alternative_co2} WHERE id = \"{user_id}\"')
+    db.execute(f'UPDATE INGREDIENTS SET foodname = \"{alternative}\", carboncost = {alternative_co2} WHERE userid = \"{user_id}\" AND foodname = \"{original_ingredient}\"')
     originalcarbon = db.execute(f"SELECT carboncost FROM USERS WHERE id = \"{user_id}\"").fetchall()[0]['carboncost']
     db.execute(f'UPDATE USERS SET carbonsaved = {original_co2 - alternative_co2}, carboncost = {originalcarbon - original_co2 + alternative_co2} WHERE id = \"{user_id}\"')
 
