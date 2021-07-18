@@ -112,6 +112,16 @@ def use_alternative():
     # update ingredient db
     # update user db
 
+def delete():
+    db = get_db()
+    user_id = session.get('user_id')
+
+    original_ingredient = request.form['foodname']
+    db.execute(f"DELETE FROM INGREDIENTS WHERE userid = \"{user_id}\" AND foodname = \"{original_ingredient}\"")
+  
+    db.commit()    
+
+
 @bp.route("/list", methods=('GET', 'POST'))
 @login_required
 def list():
@@ -121,7 +131,10 @@ def list():
         if 'food_type' in request.form:
             error = add_food()
         else:
-            saving = use_alternative()
+            if request.form['type'] == 'del':
+                delete()
+            else:
+                saving = use_alternative()
     
     pic1 = os.path.join("../" + current_app.config['UPLOAD_FOLDER'], 'logo.png')
     return render_template("carboncalc/list.html", title = "FUCounter | Shopping List", ingredients=fetch_list(), error=error, alternatives=alternatives, co2=co2, saving=saving, logo= pic1)
