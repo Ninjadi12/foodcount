@@ -15,7 +15,7 @@ bp = Blueprint('carboncalc', __name__, url_prefix='/carboncalc')
 @login_required
 def leaderboard():
     db = get_db()
-    standings = db.execute('SELECT name, carboncost, carbonsaved FROM USERS ORDER BY carbonsaved DESC LIMIT 10').fetchall()
+    standings = db.execute('SELECT name, carboncost, carbonsaved FROM USERS ORDER BY carboncost ASC LIMIT 10').fetchall()
     requests.post("https://test.eaternity.ch/api/", headers = {"authorization": "Basic aDRjSzR0SDBOT2c3NUhqZkszMzlLbE9scGEzOWZKenhYdw==", "Content-Type":"application/json"})
     return render_template("carboncalc/leaderboard.html", standings=standings)
 
@@ -59,25 +59,33 @@ def get_avg_carbon():
 @login_required
 def list():
     if request.method == 'POST':
+        error = None
+
         food_type = request.form['food_type']
         food_name = request.form['food_name']
         quantity = request.form['quantity']
-        food_co2 = co2[food_name] * int(quantity)
+
+        if food_name in co2:
+            food_co2 = co2[food_name] * int(quantity)
+        else:
+            print("!")
+            error = "Ingredient not implemented"
+            print(error)
         user_id = session.get('user_id')
 
+        if error == None:
+            db = get_db()
         
-        db = get_db()
-        
-        db.execute(
-            'INSERT INTO INGREDIENTS (foodtype, foodname, quantity, carboncost, userid) VALUES (?, ?, ?, ?, ?)',
-            (food_type, food_name, quantity, food_co2,  user_id)
-        )
+            db.execute(
+                'INSERT INTO INGREDIENTS (foodtype, foodname, quantity, carboncost, userid) VALUES (?, ?, ?, ?, ?)',
+                (food_type, food_name, quantity, food_co2,  user_id)
+            )
 
-        db.execute(f'UPDATE USERS SET carboncost = {get_avg_carbon()} WHERE id = {user_id}')
-        db.commit()
+            db.execute(f'UPDATE USERS SET carboncost = {get_avg_carbon()} WHERE id = {user_id}')
+            db.commit()
+        else:
+            flash(error)
         
-
-    get_avg_carbon()
     return render_template("carboncalc/list.html", title = "Shopping List", ingredients=fetch_list())
 
 @bp.route('/home')
