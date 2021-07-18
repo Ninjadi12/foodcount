@@ -18,7 +18,8 @@ def leaderboard():
     db = get_db()
     standings = db.execute('SELECT name, carboncost, carbonsaved FROM USERS WHERE carboncost > 0 ORDER BY carboncost ASC LIMIT 10;').fetchall()
     requests.post("https://test.eaternity.ch/api/", headers = {"authorization": "Basic aDRjSzR0SDBOT2c3NUhqZkszMzlLbE9scGEzOWZKenhYdw==", "Content-Type":"application/json"})
-    return render_template("carboncalc/leaderboard.html", standings=standings, title = "FUCounter | Leaderboard")
+    pic1 = os.path.join("../" + current_app.config['UPLOAD_FOLDER'], 'logo.png')
+    return render_template("carboncalc/leaderboard.html", standings=standings, title = "FUCounter | Leaderboard", logo= pic1)
 
 def fetch_list():
     db = get_db()
@@ -121,9 +122,9 @@ def list():
             error = add_food()
         else:
             saving = use_alternative()
-        
-        
-    return render_template("carboncalc/list.html", title = "FUCounter | Shopping List", ingredients=fetch_list(), error=error, alternatives=alternatives, co2=co2, saving=saving)
+    
+    pic1 = os.path.join("../" + current_app.config['UPLOAD_FOLDER'], 'logo.png')
+    return render_template("carboncalc/list.html", title = "FUCounter | Shopping List", ingredients=fetch_list(), error=error, alternatives=alternatives, co2=co2, saving=saving, logo= pic1)
 
 @bp.route('/home')
 @login_required
