@@ -14,12 +14,12 @@ def history():
     if g.user['history'] is not None:
         history_ids = list(g.user['history'])
     history = db.execute("SELECT foodname, carboncost, carbonsaved FROM INGREDIENTS WHERE id IN (?)", (history_ids,)).fetchall()
-    return render_template("user/carbonhistory.html", recipes=history)
+    return render_template("user/carbonhistory.html", recipes=history, title = "FUCounter | Carbon History")
 
 @bp.route("/")
 @login_required
 def user_info():
-    return render_template("user/viewuser.html", user=g.user)
+    return render_template("user/viewuser.html", user=g.user, title = "FUCounter | User Information")
 
 def fetch_friends_list():
     db = get_db()

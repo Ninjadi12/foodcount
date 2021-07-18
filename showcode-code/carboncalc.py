@@ -1,6 +1,7 @@
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, session, url_for
+    Blueprint, flash, g, redirect, render_template, request, session, url_for, current_app
 )
+import os
 
 import requests
 
@@ -17,7 +18,7 @@ def leaderboard():
     db = get_db()
     standings = db.execute('SELECT name, carboncost, carbonsaved FROM USERS WHERE carboncost > 0 ORDER BY carboncost ASC LIMIT 10;').fetchall()
     requests.post("https://test.eaternity.ch/api/", headers = {"authorization": "Basic aDRjSzR0SDBOT2c3NUhqZkszMzlLbE9scGEzOWZKenhYdw==", "Content-Type":"application/json"})
-    return render_template("carboncalc/leaderboard.html", standings=standings)
+    return render_template("carboncalc/leaderboard.html", standings=standings, title = "FUCounter | Leaderboard")
 
 def fetch_list():
     db = get_db()
@@ -63,6 +64,7 @@ def add_food():
     food_type = request.form['food_type']
     food_name = request.form['food_name']
     quantity = request.form['quantity']
+    error = ""
 
     if food_name in co2:
         food_co2 = co2[food_name] * int(quantity)
@@ -90,9 +92,9 @@ def use_alternative():
     # get selected ingredient
     
     # doesn't work with multiple items of same type!
-    original_ingredient = request.form['food_name']
-
-    original = db.execute(f"SELECT * FROM INGREDIENTS WHERE userid = {user_id} AND foodname = {original_ingredient}").fetchall()
+    original_ingredient = request.form['foodname']
+    print(original_ingredient)
+    original = db.execute(f"SELECT * FROM INGREDIENTS WHERE userid = {user_id} AND foodname = \"{original_ingredient}\"").fetchall()
     alternative = alternatives[original_ingredient]
     alternative_co2 = co2[alternative] * int(original["quantity"])
 
@@ -121,12 +123,13 @@ def list():
             use_alternative()
         
         
-    return render_template("carboncalc/list.html", title = "Shopping List", ingredients=fetch_list(), error=error)
+    return render_template("carboncalc/list.html", title = "FUCounter | Shopping List", ingredients=fetch_list(), error=error, alternatives=alternatives)
 
 @bp.route('/home')
 @login_required
 def home():
-    return render_template('carboncalc/homepage.html', title = "Home")
+    pic1 = os.path.join("../" + current_app.config['UPLOAD_FOLDER'], 'logo.png')
+    return render_template('carboncalc/homepage.html', title = "FUCounter | Home", logo = pic1)
 
 @bp.before_app_request
 def load_logged_in_user():
