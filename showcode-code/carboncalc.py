@@ -130,7 +130,9 @@ def list():
 @login_required
 def home():
     pic1 = os.path.join("../" + current_app.config['UPLOAD_FOLDER'], 'logo.png')
-    return render_template('carboncalc/homepage.html', title = "FUCounter | Home", logo = pic1)
+    pic2 = os.path.join("../" + current_app.config['UPLOAD_FOLDER'], 'badge.png')
+    pic3 = os.path.join("../" + current_app.config['UPLOAD_FOLDER'], 'coin.png')
+    return render_template('carboncalc/homepage.html', title = "FUCounter | Home", logo = pic1, Badge = pic2, coin=pic3)
 
 @bp.before_app_request
 def load_logged_in_user():

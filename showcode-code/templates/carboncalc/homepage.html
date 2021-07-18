@@ -17,6 +17,24 @@
         <a class="nav-item nav-link" href="{{url_for('carboncalc.list')}}">Shopping List</a>
       </div>
     </div>
+    <a class="navbar-brand justify-content-end">
+        <img src="{{coin}}" width="40" height="40" alt="">
+        FooCoins: 420
+    </a>
   </nav>
+
+  <div class ="row justify-content-end">
+    <div class="col-4">
+        <div class="jumbotron box-me" style="margin-top: 2vh; margin-right: 2vh">
+            <h1 class="display-4 text-center"> Recent Badges <h1>
+            <img src="{{Badge}}" class ="mx-auto d-block" width="200" height="200">
+            <p class="text-center lead"> Omittor 3 </p>
+            <hr class="my-4">
+            <p class="text-right lead"> Earned: 14:53 18/07/2021</p>
+        </div> 
+
+    </div>
+</div>
+
 
 {%endblock content%}
