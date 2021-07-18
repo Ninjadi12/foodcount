@@ -1,4 +1,4 @@
-# showcode level up society hackathon
+# Showcode level up society hackathon
 This is the repository for the level up society &amp; gamification hackathon run by showcode
 
 
