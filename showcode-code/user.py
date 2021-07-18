@@ -22,6 +22,47 @@ def history():
 def user_info():
     return render_template("user/viewuser.html", user=g.user)
 
+def fetch_friends_list():
+    db = get_db()
+    values = db.execute(f"SELECT * FROM FRIENDS WHERE name = {session.get('user_id')}").fetchall()
+    for value in values: 
+        print(value['name2'])
+    return values
+
+@bp.route('/addfriends', methods=('GET', 'POST'))
+def register():
+    if request.method == 'POST':
+        user_id = session.get('user_id')
+        username = request.form['username']
+        db = get_db()
+        error = None
+
+        if not username:
+            error = 'Username is required.'
+        elif db.execute(
+            'SELECT id FROM FRIENDS WHERE name = ? AND name2 = ?', (user_id, username,)
+        ).fetchone() is not None:
+            error = f"You've already tried to add {username}"
+        elif db.execute(
+            'SELECT * FROM USERS WHERE name = ?', (username,)
+        ).fetchone() is None:
+              error = f"{username} doesn't exist"
+        elif db.execute(
+            'SELECT * FROM USERS WHERE id = ? AND name = ?', (user_id, username,)
+        ).fetchone() is not None:
+              error = f"You can't add yourself"
+    
+        if error is None:
+            db.execute(
+                'INSERT INTO FRIENDS (name, name2) VALUES (?, ?)',
+                (user_id, username)
+            )
+            db.commit()
+
+        flash(error)
+
+    return render_template('user/addfriends.html', friends=fetch_friends_list())
+
 @bp.before_app_request
 def load_logged_in_user():
     user_id = session.get('user_id')
