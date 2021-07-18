@@ -34,7 +34,7 @@
     min-height: 100%; 
 }
 
-.jumbotron 
+.jumbotron{}
 
 #initial {
     display: flex;
