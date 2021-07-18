@@ -52,21 +52,33 @@ html {
     height:100%;
 }
 
-#new-ingredient {
-    max-width: 40%;
-    
+#new-ingredient table {
+    width: 105%;
+}
+
+#new-ingredient td {
+    padding: 0.2%;
 }
 
 
+
+#list td {
+    padding: 0.2%;
+}
+
+#list table {
+    width: 100%;
+}
 
 #list {
-    max-width: 100%;
-    float: right
+    text-align: center;
+    width: 40%;
 }
+
 
 #list-container {
     display:flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     width: 100%;
     padding: 5%;
     text-align: center;
