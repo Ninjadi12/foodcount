@@ -103,3 +103,25 @@ html {
     width: 35%;
     
 }
+
+.styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    border-collapse: collapse;
+}
+
+.styled-table th {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+    border: solid 2px green;
+}
+
+.styled-table td {
+    padding: 12px 15px;
+    border: solid 2px green;
+}
