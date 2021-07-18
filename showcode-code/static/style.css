@@ -112,13 +112,13 @@ table {
 }
 
 .styled-table th {
-    background-color: #009879;
+    background-color: #4E4598;
     color: #ffffff;
     text-align: left;
-    border: solid 2px green;
+    border: solid 2px #4E4598;
 }
 
 .styled-table td {
     padding: 12px 15px;
-    border: solid 2px green;
+    border: solid 2px #4E4598;
 }
