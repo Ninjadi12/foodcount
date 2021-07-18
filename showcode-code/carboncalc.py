@@ -97,6 +97,7 @@ def use_alternative():
     original = db.execute(f"SELECT * FROM INGREDIENTS WHERE userid = {user_id} AND foodname = \"{original_ingredient}\"").fetchall()
     alternative = alternatives[original_ingredient]
     alternative_co2 = co2[alternative] * int(original["quantity"])
+    return (1 - (co2[original_ingredient] * int(original["quantity"]) / alternative_co2)) * 100
 
     
 
@@ -115,15 +116,15 @@ def use_alternative():
 @login_required
 def list():
     error = ""
+    saving = 0
     if request.method == 'POST':
         if 'food_type' in request.form:
             error = add_food()
-
         else:
-            use_alternative()
+            saving = use_alternative()
         
         
-    return render_template("carboncalc/list.html", title = "FUCounter | Shopping List", ingredients=fetch_list(), error=error, alternatives=alternatives, co2=co2)
+    return render_template("carboncalc/list.html", title = "FUCounter | Shopping List", ingredients=fetch_list(), error=error, alternatives=alternatives, co2=co2, saving=saving)
 
 @bp.route('/home')
 @login_required
