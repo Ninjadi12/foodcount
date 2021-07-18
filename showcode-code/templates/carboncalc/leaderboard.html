@@ -1,21 +1,21 @@
 {% extends 'base.html'%}
 
 {%block content%}
+<div id="leader-container">
 <h1>Leaderboard</h1>
 
 <table>
     <tr>
         <th>User</th>
-        <th>Carbon used</th>
-        <th>Carbon saved</th>
+        <th>Average Carbon Emissions (g)</th>
     </tr>
     {% for item in standings %}
         <tr>
             <td>{{item['name']}}</td>
-            <td>{{item['carboncost']}}</td>
-            <td>{{item['carbonsaved']}}</td>
+            <td>{{"%.1f" %(item['carboncost'])}}</td>
         </tr>
     {% endfor %}
 </table>
+</div>
 
 {%endblock content%}

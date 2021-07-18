@@ -59,14 +59,42 @@ html {
     max-width: 100%;
 }
 
-#list {
-    max-width: 100%;
-    float: right
+#new-ingredient table {
+    width: 105%;
 }
+
+#new-ingredient td {
+    padding: 0.2%;
+}
+
+
+
+#list td {
+    padding: 0.2%;
+}
+
+#list table {
+    width: 100%;
+}
+
+#list {
+    text-align: center;
+    width: 40%;
+}
+
 
 #list-container {
     display:flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     width: 100%;
-    margin: 5%
+    padding: 5%;
+    text-align: center;
+}
+
+#leader-container {
+    padding: 2%;
+    display: flex;
+    flex-direction: column;
+    width: 35%;
+    
 }

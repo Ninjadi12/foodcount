@@ -16,7 +16,7 @@ bp = Blueprint('carboncalc', __name__, url_prefix='/carboncalc')
 @login_required
 def leaderboard():
     db = get_db()
-    standings = db.execute('SELECT name, carboncost, carbonsaved FROM USERS ORDER BY carbonsaved DESC LIMIT 10').fetchall()
+    standings = db.execute('SELECT name, carboncost, carbonsaved FROM USERS WHERE carboncost > 0 ORDER BY carboncost ASC LIMIT 10;').fetchall()
     requests.post("https://test.eaternity.ch/api/", headers = {"authorization": "Basic aDRjSzR0SDBOT2c3NUhqZkszMzlLbE9scGEzOWZKenhYdw==", "Content-Type":"application/json"})
     return render_template("carboncalc/leaderboard.html", standings=standings, title = "FUCounter | Leaderboard")
 
@@ -39,6 +39,11 @@ co2 = {
     "Brown Rice": 2.16
 }
 
+alternatives = {
+    "Butter": "Margarine",
+
+}
+
 def get_avg_carbon():
     db = get_db()
     values = db.execute(f"SELECT * FROM INGREDIENTS WHERE userid = {session.get('user_id')}").fetchall()
@@ -55,20 +60,21 @@ def get_avg_carbon():
     
     return avgcost
 
+def add_food():
+    food_type = request.form['food_type']
+    food_name = request.form['food_name']
+    quantity = request.form['quantity']
 
-@bp.route("/list", methods=('GET', 'POST'))
-@login_required
-def list():
-    if request.method == 'POST':
-        food_type = request.form['food_type']
-        food_name = request.form['food_name']
-        quantity = request.form['quantity']
+    if food_name in co2:
         food_co2 = co2[food_name] * int(quantity)
-        user_id = session.get('user_id')
+    else:
+        error = "Ingredient not implemented"
+        print(error)
+    user_id = session.get('user_id')
 
-        
+    if error == "":
         db = get_db()
-        
+    
         db.execute(
             'INSERT INTO INGREDIENTS (foodtype, foodname, quantity, carboncost, userid) VALUES (?, ?, ?, ?, ?)',
             (food_type, food_name, quantity, food_co2,  user_id)
@@ -76,10 +82,47 @@ def list():
 
         db.execute(f'UPDATE USERS SET carboncost = {get_avg_carbon()} WHERE id = {user_id}')
         db.commit()
-        
+    return error
 
-    get_avg_carbon()
-    return render_template("carboncalc/list.html", ingredients=fetch_list(), title = "FUCounter | Shopping List")
+def use_alternative():
+    db = get_db()
+    user_id = session.get('user_id')
+
+    # get selected ingredient
+    
+    # doesn't work with multiple items of same type!
+    original_ingredient = request.form['food_name']
+
+    original = db.execute(f"SELECT * FROM INGREDIENTS WHERE userid = {user_id} AND foodname = {original_ingredient}").fetchall()
+    alternative = alternatives[original_ingredient]
+    alternative_co2 = co2[alternative] * int(original["quantity"])
+
+    
+
+    # doesn't work with alternative being different type
+    # alternative must have carbon implemented!
+    db.execute(f'UPDATE INGREDIENTS SET foodname = {alternative}, carboncost = {alternative_co2} WHERE id = {user_id}')
+    originalcarbon = db.execute(f"SELECT carboncost FROM USERS WHERE userid = {user_id}").fetchall()
+    db.execute(f'UPDATE USERS SET carbonsaved = {original["carboncost"] - alternative_co2}, carboncost = {originalcarbon - original["carboncost"] + alternative_co2} WHERE id = {user_id}')
+
+    db.commit()    
+
+    # update ingredient db
+    # update user db
+
+@bp.route("/list", methods=('GET', 'POST'))
+@login_required
+def list():
+    error = ""
+    if request.method == 'POST':
+        if 'food_type' in request.form:
+            error = add_food()
+
+        else:
+            use_alternative()
+        
+        
+    return render_template("carboncalc/list.html", title = "FUCounter | Shopping List", ingredients=fetch_list(), error=error)
 
 @bp.route('/home')
 @login_required

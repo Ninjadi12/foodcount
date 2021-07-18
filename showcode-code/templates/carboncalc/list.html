@@ -81,22 +81,23 @@ function update() {
         <form name="f" method="POST">
             <table>
             <tr>
-                <td><label for="food_type">Food</label></td>
-                <td>
+                <td style="text-align: left"><label for="food_type">Food</label></td>
+                <td style="text-align: right">
                     <select id="food_type" name="food_type"  onchange="update()" >
     
 
                     </select>
                 
-                    <select id="food_name" name="food_name">
+                    <select id="food_name" class="flashes" name="food_name">
 
                     </select>
+                    <p>{{error}}</p>
                 </td>
                     
             </tr>
             <tr>
-                <td><label for="quantity">Amount</label></td>
-                <td><input type="number" min="0" max="1000000" id="quantity" name="quantity" step="0.1" required></input>
+                <td  style="text-align: left"><label for="quantity">Amount</label></td>
+                <td  style="text-align: right"><input type="number" min="0" max="10000" id="quantity" name="quantity" step="0.1" required></input>
                     <select id="unit" name="unit">
                         <option value="g">g</option>
                         <option value="kg">kg</option>
@@ -104,25 +105,26 @@ function update() {
                         <option value="l">l</option>
                     </select></td>
             </tr>
-            <tr><td  style="text-align: center"><input type="submit" value="Submit"></td></tr>
-            
+            <tr><td><input type="submit" style="font-weight: bold" value="Submit"></td></tr>
             </table>
+            
         </form>
     </div>
 
     <div id="list" >
         <h2>Shopping List</h2>
         <table>
-            <tr>
+            <tr style="font-weight: bold">
                 <td>Ingredient</td>
-                <td>Quantity</td>
-                <td>Carbon Cost</td>
+                <td>Quantity (g)</td>
+                <td>Carbon Cost (g)</td>
             </tr>
             {% for item in ingredients %}
             <tr>
                 <td>{{item['foodname']}}</td>
-                <td>{{"%d" %(item['quantity'])}}g</td>
-                <td>{{"%.1f" %(item['carboncost'])}}g</td>
+                <td>{{"%d" %(item['quantity'])}}</td>
+                <td>{{"%d" %(item['carboncost'])}}</td>
+                <td><form method="post", name="a"><input type="submit" value="Use Alternative" name="Use_Alternative"/></form></td>
             </tr>
             {% endfor %}
         </table>
