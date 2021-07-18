@@ -1,6 +1,7 @@
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, session, url_for
+    Blueprint, flash, g, redirect, render_template, request, session, url_for, current_app
 )
+import os
 
 import requests
 
@@ -17,7 +18,7 @@ def leaderboard():
     db = get_db()
     standings = db.execute('SELECT name, carboncost, carbonsaved FROM USERS ORDER BY carbonsaved DESC LIMIT 10').fetchall()
     requests.post("https://test.eaternity.ch/api/", headers = {"authorization": "Basic aDRjSzR0SDBOT2c3NUhqZkszMzlLbE9scGEzOWZKenhYdw==", "Content-Type":"application/json"})
-    return render_template("carboncalc/leaderboard.html", standings=standings)
+    return render_template("carboncalc/leaderboard.html", standings=standings, title = "FUCounter | Leaderboard")
 
 def fetch_list():
     db = get_db()
@@ -78,12 +79,13 @@ def list():
         
 
     get_avg_carbon()
-    return render_template("carboncalc/list.html", title = "Shopping List", ingredients=fetch_list())
+    return render_template("carboncalc/list.html", ingredients=fetch_list(), title = "FUCounter | Shopping List")
 
 @bp.route('/home')
 @login_required
 def home():
-    return render_template('carboncalc/homepage.html', title = "Home")
+    pic1 = os.path.join("../" + current_app.config['UPLOAD_FOLDER'], 'logo.png')
+    return render_template('carboncalc/homepage.html', title = "FUCounter | Home", logo = pic1)
 
 @bp.before_app_request
 def load_logged_in_user():
