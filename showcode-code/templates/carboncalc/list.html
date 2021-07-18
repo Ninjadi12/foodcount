@@ -114,11 +114,16 @@ function update() {
     <div id="list" >
         <h2>Shopping List</h2>
         <table>
+            <tr>
+                <td>Ingredient</td>
+                <td>Quantity</td>
+                <td>Carbon Cost</td>
+            </tr>
             {% for item in ingredients %}
             <tr>
                 <td>{{item['foodname']}}</td>
-                <td>{{item['quantity']}}</td>
-                <td>{{item['carboncost']}}</td>
+                <td>{{"%d" %(item['quantity'])}}g</td>
+                <td>{{item['carboncost']}}g</td>
             </tr>
             {% endfor %}
         </table>
