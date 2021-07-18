@@ -63,6 +63,7 @@ def add_food():
     food_type = request.form['food_type']
     food_name = request.form['food_name']
     quantity = request.form['quantity']
+    error = ""
 
     if food_name in co2:
         food_co2 = co2[food_name] * int(quantity)
@@ -90,9 +91,9 @@ def use_alternative():
     # get selected ingredient
     
     # doesn't work with multiple items of same type!
-    original_ingredient = request.form['food_name']
-
-    original = db.execute(f"SELECT * FROM INGREDIENTS WHERE userid = {user_id} AND foodname = {original_ingredient}").fetchall()
+    original_ingredient = request.form['foodname']
+    print(original_ingredient)
+    original = db.execute(f"SELECT * FROM INGREDIENTS WHERE userid = {user_id} AND foodname = \"{original_ingredient}\"").fetchall()
     alternative = alternatives[original_ingredient]
     alternative_co2 = co2[alternative] * int(original["quantity"])
 
@@ -121,7 +122,7 @@ def list():
             use_alternative()
         
         
-    return render_template("carboncalc/list.html", title = "Shopping List", ingredients=fetch_list(), error=error)
+    return render_template("carboncalc/list.html", title = "Shopping List", ingredients=fetch_list(), error=error, alternatives=alternatives)
 
 @bp.route('/home')
 @login_required
