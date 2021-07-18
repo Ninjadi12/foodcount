@@ -15,7 +15,7 @@ bp = Blueprint('carboncalc', __name__, url_prefix='/carboncalc')
 @login_required
 def leaderboard():
     db = get_db()
-    standings = db.execute('SELECT name, carboncost, carbonsaved FROM USERS ORDER BY carboncost ASC LIMIT 10').fetchall()
+    standings = db.execute('SELECT name, carboncost, carbonsaved FROM USERS WHERE carboncost > 0 ORDER BY carboncost ASC LIMIT 10;').fetchall()
     requests.post("https://test.eaternity.ch/api/", headers = {"authorization": "Basic aDRjSzR0SDBOT2c3NUhqZkszMzlLbE9scGEzOWZKenhYdw==", "Content-Type":"application/json"})
     return render_template("carboncalc/leaderboard.html", standings=standings)
 
@@ -58,8 +58,8 @@ def get_avg_carbon():
 @bp.route("/list", methods=('GET', 'POST'))
 @login_required
 def list():
+    error = ""
     if request.method == 'POST':
-        error = None
 
         food_type = request.form['food_type']
         food_name = request.form['food_name']
@@ -68,12 +68,11 @@ def list():
         if food_name in co2:
             food_co2 = co2[food_name] * int(quantity)
         else:
-            print("!")
             error = "Ingredient not implemented"
             print(error)
         user_id = session.get('user_id')
 
-        if error == None:
+        if error == "":
             db = get_db()
         
             db.execute(
@@ -83,10 +82,9 @@ def list():
 
             db.execute(f'UPDATE USERS SET carboncost = {get_avg_carbon()} WHERE id = {user_id}')
             db.commit()
-        else:
-            flash(error)
+
         
-    return render_template("carboncalc/list.html", title = "Shopping List", ingredients=fetch_list())
+    return render_template("carboncalc/list.html", title = "Shopping List", ingredients=fetch_list(), error=error)
 
 @bp.route('/home')
 @login_required
