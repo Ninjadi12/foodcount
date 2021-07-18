@@ -1,6 +1,23 @@
 {% extends 'base.html'%}
 
 {%block content%}
+<nav class="navbar navbar-expand-lg navbar-light navbar-custom">
+    <a class="navbar-brand" href="{{url_for('initial')}}">
+        <img src="{{logo}}" width="30" height="30" alt="">
+        FoodCounter
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-item nav-link" href="{{url_for('carboncalc.home')}}">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-item nav-link active" href="{{url_for('carboncalc.leaderboard')}}">Leaderboard</a>
+        <a class="nav-item nav-link" href="{{url_for('carboncalc.list')}}">Shopping List</a>
+      </div>
+    </div>
+  </nav>
+
 <div id="leader-container">
 <h1>Leaderboard</h1>
 
