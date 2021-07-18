@@ -25,11 +25,14 @@
     <tr>
         <th>User</th>
         <th>Average Carbon Emissions (g)</th>
+        
     </tr>
     {% for item in standings %}
+        
         <tr>
             <td>{{item['name']}}</td>
             <td>{{"%.1f" %(item['carboncost'])}}</td>
+            <td>{{"%.1f" %(item['carbonsaved'])}}</td>
         </tr>
     {% endfor %}
 </table>

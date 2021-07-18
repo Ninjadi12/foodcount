@@ -42,7 +42,9 @@ co2 = {
 
 alternatives = {
     "Butter": "Margarine",
-
+    "White Rice": "Brown Rice",
+    "Beef": "Pork",
+    "Turkey": "Chicken"
 }
 
 def get_avg_carbon():
@@ -103,29 +105,47 @@ def use_alternative():
 
     # doesn't work with alternative being different type
     # alternative must have carbon implemented!
-    db.execute(f'UPDATE INGREDIENTS SET foodname = \"{alternative}\", carboncost = {alternative_co2} WHERE userid = \"{user_id}\" AND foodname = \"{original_ingredient}\"')
+    record_id = request.form["id"]
+    db.execute(f'UPDATE INGREDIENTS SET foodname = \"{alternative}\", carboncost = {alternative_co2} WHERE userid = \"{user_id}\" AND foodname = \"{original_ingredient}\" AND id = \"{record_id}\"')
     originalcarbon = db.execute(f"SELECT carboncost FROM USERS WHERE id = \"{user_id}\"").fetchall()[0]['carboncost']
     db.execute(f'UPDATE USERS SET carbonsaved = {original_co2 - alternative_co2}, carboncost = {originalcarbon - original_co2 + alternative_co2} WHERE id = \"{user_id}\"')
 
-    db.commit()    
-    return (1 - (co2[original_ingredient] * int(original["quantity"]) / alternative_co2)) * 100
+    db.commit()  
+    return (1 - alternative_co2 / (co2[original_ingredient] * int(original["quantity"]))) * 100
     # update ingredient db
     # update user db
+
+def delete():
+    db = get_db()
+    user_id = session.get('user_id')
+
+    record_id = request.form["id"]
+
+    original_ingredient = request.form['foodname']
+    db.execute(f"DELETE FROM INGREDIENTS WHERE userid = \"{user_id}\" AND foodname = \"{original_ingredient}\" AND id = \"{record_id}\"")
+  
+    db.commit()    
+
 
 @bp.route("/list", methods=('GET', 'POST'))
 @login_required
 def list():
     error = ""
     saving = 0
+    id = -1
     if request.method == 'POST':
         if 'food_type' in request.form:
             error = add_food()
         else:
-            saving = use_alternative()
+            if request.form['type'] == 'del':
+                delete()
+            else:
+                saving = use_alternative()
+                id = int(request.form["id"])
     
     pic1 = os.path.join("../" + current_app.config['UPLOAD_FOLDER'], 'logo.png')
-    return render_template("carboncalc/list.html", title = "FUCounter | Shopping List", ingredients=fetch_list(), error=error, alternatives=alternatives, co2=co2, saving=saving, logo= pic1)
-
+    return render_template("carboncalc/list.html", title = "FUCounter | Shopping List", ingredients=fetch_list(), error=error, alternatives=alternatives, co2=co2, saving=saving, id=id, logo=pic1)
+    
 @bp.route('/home')
 @login_required
 def home():
