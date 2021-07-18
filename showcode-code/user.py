@@ -14,7 +14,7 @@ def history():
     history_ids = ""
     if g.user['history'] is not None:
         history_ids = list(g.user['history'])
-    history = db.execute("SELECT ingredients, carboncost, carbonsaved FROM RECIPES WHERE id IN (?)", (history_ids,)).fetchall()
+    history = db.execute("SELECT foodname, carboncost, carbonsaved FROM INGREDIENTS WHERE id IN (?)", (history_ids,)).fetchall()
     return render_template("user/carbonhistory.html", recipes=history)
 
 @bp.route("/")
