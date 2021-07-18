@@ -53,8 +53,11 @@ html {
 }
 
 #new-ingredient {
-    max-width: 100%
+    max-width: 40%;
+    
 }
+
+
 
 #list {
     max-width: 100%;
@@ -65,7 +68,8 @@ html {
     display:flex;
     justify-content: space-around;
     width: 100%;
-    margin: 5%
+    padding: 5%;
+    text-align: center;
 }
 
 #leader-container {
@@ -73,5 +77,5 @@ html {
     display: flex;
     flex-direction: column;
     width: 35%;
-    text-align: center;
+    
 }

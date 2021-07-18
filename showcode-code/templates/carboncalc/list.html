@@ -81,7 +81,7 @@ function update() {
         <form name="f" method="POST">
             <table>
             <tr>
-                <td><label for="food_type">Food</label></td>
+                <td style="text-align: left"><label for="food_type">Food</label></td>
                 <td>
                     <select id="food_type" name="food_type"  onchange="update()" >
     
@@ -96,7 +96,7 @@ function update() {
                     
             </tr>
             <tr>
-                <td><label for="quantity">Amount</label></td>
+                <td><label for="quantity" style="text-align: left">Amount</label></td>
                 <td><input type="number" min="0" max="1000000" id="quantity" name="quantity" step="0.1" required></input>
                     <select id="unit" name="unit">
                         <option value="g">g</option>
