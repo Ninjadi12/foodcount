@@ -123,7 +123,7 @@ def list():
             use_alternative()
         
         
-    return render_template("carboncalc/list.html", title = "FUCounter | Shopping List", ingredients=fetch_list(), error=error, alternatives=alternatives)
+    return render_template("carboncalc/list.html", title = "FUCounter | Shopping List", ingredients=fetch_list(), error=error, alternatives=alternatives, co2=co2)
 
 @bp.route('/home')
 @login_required
