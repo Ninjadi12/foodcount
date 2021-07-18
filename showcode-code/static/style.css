@@ -67,3 +67,11 @@ html {
     width: 100%;
     margin: 5%
 }
+
+#leader-container {
+    padding: 2%;
+    display: flex;
+    flex-direction: column;
+    width: 35%;
+    text-align: center;
+}
