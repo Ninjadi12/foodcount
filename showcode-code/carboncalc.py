@@ -108,7 +108,7 @@ def use_alternative():
     record_id = request.form["id"]
     db.execute(f'UPDATE INGREDIENTS SET foodname = \"{alternative}\", carboncost = {alternative_co2} WHERE userid = \"{user_id}\" AND foodname = \"{original_ingredient}\" AND id = \"{record_id}\"')
     originalcarbon = db.execute(f"SELECT carboncost FROM USERS WHERE id = \"{user_id}\"").fetchall()[0]['carboncost']
-    db.execute(f'UPDATE USERS SET carbonsaved = {original_co2 - alternative_co2}, carboncost = {originalcarbon - original_co2 + alternative_co2} WHERE id = \"{user_id}\"')
+    db.execute(f'UPDATE USERS SET carbonsaved = {original_co2 - alternative_co2}, carboncost = {get_avg_carbon()} WHERE id = \"{user_id}\"')
 
     db.commit()  
     return (1 - alternative_co2 / (co2[original_ingredient] * int(original["quantity"]))) * 100
