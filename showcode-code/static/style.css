@@ -3,6 +3,9 @@
     --darkerpurpley: #9388E4; 
     --buttoncol: #FF3E41;
 }
+.navbar-custom {
+    background-color: #9388E4;
+}
 
 .btn-primary {
     background-color: var(--buttoncol);
