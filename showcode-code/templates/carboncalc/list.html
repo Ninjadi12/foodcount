@@ -20,22 +20,20 @@
 
 <script>
 var foods = {
-    "Beans & Pulses": ["not implemented"],
+    "Beans and Pulses": ["not implemented"],
     "Dairy": ["Butter", "Cheddar Cheese", "Cows' Milk", "Eggs", "Yoghurt"],
     "Fruit": ["Apples", "Apricots", "Bananas", "Blackberries", "Blueberries", "Cherries", "Grapes", "Mangos", "Oranges", "Peaches", "Raspberries", "Strawberries"],
     "Grains": ["Oats", "White Rice", "Brown Rice"],
-    "Meat & Seafood": ["Beef", "Chicken", "Lamb", "Pork", "Turkey"],
-    "Nuts & Seeds": ["Almonds", "Pecans", "Pistachios", "Walnuts"],
+    "Meat and Seafood": ["Beef", "Chicken", "Lamb", "Pork", "Turkey"],
+    "Nuts and Seeds": ["Almonds", "Pecans", "Pistachios", "Walnuts"],
     "Processed Foods": ["Coffee", "Ice Cream", "Pasta", "Peanut Butter", "Tofu"],
     "Vegetables": ["Broccoli", "Cabbage", "Carrots", "Cucumbers", "Lettuce", "Onions", "Peppers", "Spinach", "Tomatoes"]
 }
 
-var selected_type = "Fruit";
-var selected_food="Apples";
 
 function setup_box() {
     var keys = Object.keys(foods);
-    var type_box = document.getElementById("type");
+    var type_box = document.getElementById("food_type");
     type_box.innerHTML = "";
     for (var i = 0; i < keys.length; i++) {
         type_box.innerHTML += "<option value=" + keys[i] + ">" + keys[i] + " </option>";   
@@ -43,7 +41,7 @@ function setup_box() {
     type_box.selectedIndex = 1;
 
     var names = foods[keys[type_box.selectedIndex]];
-    var name_box = document.getElementById("name");
+    var name_box = document.getElementById("food_name");
     name_box.innerHTML = "";
     for (var i = 0; i < names.length; i++) {
         name_box.innerHTML += "<option value=" + names[i] + ">" + names[i] + " </option>";   
@@ -54,24 +52,24 @@ function setup_box() {
 
 function update() {
     var keys = Object.keys(foods);
-    var type_box = document.getElementById("type");
+    var type_box = document.getElementById("food_type");
     var selected = type_box.selectedIndex;
     type_box.innerHTML = "";
     for (var i = 0; i < keys.length; i++) {
         if (selected == i) {
-            type_box.innerHTML += "<option value=" + keys[i] + "selected=\"selected\">" + keys[i] + "</option>";   
+            type_box.innerHTML += "<option value=\"" + keys[i] + "\"selected=\"selected\">" + keys[i] + "</option>";   
             var previous = i;
         } else {
-            type_box.innerHTML += "<option value=" + keys[i] + ">" + keys[i] + " </option>";   
+            type_box.innerHTML += "<option value=\"" + keys[i] + "\">" + keys[i] + " </option>";   
         }
     }
     type_box.selectedIndex = previous;
 
     var names = foods[keys[type_box.selectedIndex]];
-    var name_box = document.getElementById("name");
+    var name_box = document.getElementById("food_name");
     name_box.innerHTML = "";
     for (var i = 0; i < names.length; i++) {
-        name_box.innerHTML += "<option value=" + names[i] + ">" + names[i] + " </option>";   
+        name_box.innerHTML += "<option value=\"" + names[i] + "\">" + names[i] + " </option>";   
     }
 }
 </script>
@@ -81,17 +79,17 @@ function update() {
     <div id="list-container">
     <div id="new-ingredient">
         <h2>New Ingredient</h2>
-        <form name="f">
+        <form name="f" method="POST">
             <table>
             <tr>
-                <td><label for="type">Food</label></td>
+                <td><label for="food_type">Food</label></td>
                 <td>
-                    <select id="type"  onchange="update()" >
+                    <select id="food_type" name="food_type"  onchange="update()" >
     
 
                     </select>
                 
-                    <select id="name">
+                    <select id="food_name" name="food_name">
 
                     </select>
                 </td>
@@ -99,8 +97,8 @@ function update() {
             </tr>
             <tr>
                 <td><label for="quantity">Amount</label></td>
-                <td><input type="number" min="0" max="1000000" id="quantity"></input>
-                    <select id="quantity">
+                <td><input type="number" min="0" max="1000000" id="quantity" name="quantity" step="0.1" required></input>
+                    <select id="unit" name="unit">
                         <option value="g">g</option>
                         <option value="kg">kg</option>
                         <option value="ml">ml</option>
@@ -115,7 +113,16 @@ function update() {
 
     <div id="list" >
         <h2>Shopping List</h2>
-
+        <table>
+            {% for item in ingredients %}
+            <tr>
+                <td>{{item['foodname']}}</td>
+                <td>{{item['quantity']}}</td>
+                <td>{{item['carboncost']}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    
     </div>
     </div>
     {% endblock %}
