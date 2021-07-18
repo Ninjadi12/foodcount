@@ -154,7 +154,7 @@ def home():
     pic3 = os.path.join("../" + current_app.config['UPLOAD_FOLDER'], 'coin.png')
 
     db = get_db()
-    standings = db.execute('SELECT name, carboncost, carbonsaved FROM USERS WHERE carboncost > 0 ORDER BY carboncost ASC LIMIT 10;').fetchall()
+    standings = db.execute('SELECT name, carboncost, carbonsaved FROM USERS WHERE carbonsaved > 0 ORDER BY carbonsaved DESC LIMIT 10;').fetchall()
     
     return render_template('carboncalc/homepage.html', title = "FUCounter | Home", logo = pic1, Badge = pic2, coin=pic3, standings=standings)
 
