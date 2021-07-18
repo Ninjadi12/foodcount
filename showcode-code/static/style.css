@@ -34,8 +34,6 @@
     min-height: 100%; 
 }
 
-.jumbotron
-
 #initial {
     display: flex;
     flex-direction: column;
