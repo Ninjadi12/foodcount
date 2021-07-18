@@ -38,58 +38,46 @@ co2 = {
     "Brown Rice": 2.16
 }
 
+def get_avg_carbon():
+    db = get_db()
+    values = db.execute(f"SELECT * FROM INGREDIENTS WHERE userid = {session.get('user_id')}").fetchall()
+    
+    cost = 0
+    quantity = 0
+    for ingredient in values:
+        cost += ingredient["carboncost"]
+        quantity += ingredient["quantity"]
+    if quantity > 0:
+        avgcost = cost / quantity
+    else:
+        avgcost = 0
+    
+    return avgcost
+
 
 @bp.route("/list", methods=('GET', 'POST'))
 @login_required
 def list():
-    if request.method == 'GET':
-        pass
-    
-    elif request.method == 'POST':
+    if request.method == 'POST':
         food_type = request.form['food_type']
         food_name = request.form['food_name']
         quantity = request.form['quantity']
         food_co2 = co2[food_name] * int(quantity)
+        user_id = session.get('user_id')
 
         
         db = get_db()
         
         db.execute(
             'INSERT INTO INGREDIENTS (foodtype, foodname, quantity, carboncost, userid) VALUES (?, ?, ?, ?, ?)',
-            (food_type, food_name, quantity, food_co2,  session.get('user_id'))
+            (food_type, food_name, quantity, food_co2,  user_id)
         )
+
+        db.execute(f'UPDATE USERS SET carboncost = {get_avg_carbon()} WHERE id = {user_id}')
         db.commit()
         
-        """
-        if quantity is None:
-            error = 'Incorrect username.'
-        elif not check_password_hash(user['password'], password):
-            error = 'Incorrect password.'
 
-        if error is None:
-            session.clear()
-            session['user_id'] = user['id']
-            return redirect(url_for('initial'))
-
-        flash(error)
-
-
-        elif db.execute(
-            'SELECT id FROM USERS WHERE name = ?', (username,)
-        ).fetchone() is not None:
-            error = f"User {username} is already registered."
-
-        if error is None:
-            db.execute(
-                'INSERT INTO USERS (name, password, carboncost, carbonsaved) VALUES (?, ?, ?, ?)',
-                (username, generate_password_hash(password), 0.0, 0.0)
-            )
-            db.commit()
-            return redirect(url_for('auth.login'))
-
-        flash(error)"""
-
-
+    get_avg_carbon()
     return render_template("carboncalc/list.html", title = "Shopping List", ingredients=fetch_list())
 
 @bp.route('/home')
