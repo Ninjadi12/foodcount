@@ -117,8 +117,10 @@ def delete():
     db = get_db()
     user_id = session.get('user_id')
 
+    record_id = request.form["id"]
+
     original_ingredient = request.form['foodname']
-    db.execute(f"DELETE FROM INGREDIENTS WHERE userid = \"{user_id}\" AND foodname = \"{original_ingredient}\"")
+    db.execute(f"DELETE FROM INGREDIENTS WHERE userid = \"{user_id}\" AND foodname = \"{original_ingredient}\" AND id = \"{record_id}\"")
   
     db.commit()    
 
@@ -137,6 +139,7 @@ def list():
                 delete()
             else:
                 saving = use_alternative()
+                id = int(request.form["id"])
     
     pic1 = os.path.join("../" + current_app.config['UPLOAD_FOLDER'], 'logo.png')
     return render_template("carboncalc/list.html", title = "FUCounter | Shopping List", ingredients=fetch_list(), error=error, alternatives=alternatives, co2=co2, saving=saving, id=id, logo=pic1)

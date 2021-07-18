@@ -157,7 +157,7 @@ function update() {
                 <td></td>
                 <td></td>
                 {% endif %}
-                <td><form method="post"><input type="submit" value="Delete"/><input type="text" name="type" hidden value="del"/><input type="hidden" name="foodname" value="{{item['foodname']}}"><input type="text" name="type" hidden value="del"/></form></td>
+                <td><form method="post"><input type="submit" value="Delete"/><input type="text" name="type" hidden value="del"/><input type="text" name="foodname" hidden value="{{item['foodname']}}"/><input type="text" name="id" hidden value="{{item['id']}}"/><input type="hidden" name="foodname" value="{{item['foodname']}}"><input type="text" name="type" hidden value="del"/></form></td>
             </tr>
             {% endfor %}
         </table>
