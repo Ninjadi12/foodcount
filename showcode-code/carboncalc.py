@@ -8,6 +8,8 @@ import requests
 from .db import get_db
 from .auth import login_required
 
+
+
 BONAPI_API_KEY = "bdec218560cbe2ab59aa2737f090cbc11280bb62"
 
 bp = Blueprint('carboncalc', __name__, url_prefix='/carboncalc')
@@ -15,11 +17,15 @@ bp = Blueprint('carboncalc', __name__, url_prefix='/carboncalc')
 @bp.route("/leaderboard")
 @login_required
 def leaderboard():
+    pic1 = os.path.join("../" + current_app.config['UPLOAD_FOLDER'], 'logo.png')
+    pic2 = os.path.join("../" + current_app.config['UPLOAD_FOLDER'], 'badge.png')
+    pic3 = os.path.join("../" + current_app.config['UPLOAD_FOLDER'], 'coin.png')
+
     db = get_db()
     standings = db.execute('SELECT name, carboncost, carbonsaved FROM USERS WHERE carboncost > 0 ORDER BY carboncost ASC LIMIT 10;').fetchall()
     requests.post("https://test.eaternity.ch/api/", headers = {"authorization": "Basic aDRjSzR0SDBOT2c3NUhqZkszMzlLbE9scGEzOWZKenhYdw==", "Content-Type":"application/json"})
     pic1 = os.path.join("../" + current_app.config['UPLOAD_FOLDER'], 'logo.png')
-    return render_template("carboncalc/leaderboard.html", standings=standings, title = "FUCounter | Leaderboard", logo= pic1)
+    return render_template("carboncalc/leaderboard.html", standings=standings, coin=pic3, title = "FUCounter | Leaderboard", logo= pic1)
 
 def fetch_list():
     db = get_db()
@@ -134,6 +140,9 @@ def delete():
 @bp.route("/list", methods=('GET', 'POST'))
 @login_required
 def list():
+    pic1 = os.path.join("../" + current_app.config['UPLOAD_FOLDER'], 'logo.png')
+    pic2 = os.path.join("../" + current_app.config['UPLOAD_FOLDER'], 'badge.png')
+    pic3 = os.path.join("../" + current_app.config['UPLOAD_FOLDER'], 'coin.png')
     error = ""
     saving = 0
     id = -1
@@ -148,7 +157,7 @@ def list():
                 id = int(request.form["id"])
     
     pic1 = os.path.join("../" + current_app.config['UPLOAD_FOLDER'], 'logo.png')
-    return render_template("carboncalc/list.html", title = "FUCounter | Shopping List", ingredients=fetch_list(), error=error, alternatives=alternatives, co2=co2, saving=saving, id=id, logo=pic1)
+    return render_template("carboncalc/list.html", title = "FUCounter | Shopping List", ingredients=fetch_list(), error=error, coin=pic3, alternatives=alternatives, co2=co2, saving=saving, id=id, logo=pic1)
     
 @bp.route('/home')
 @login_required
