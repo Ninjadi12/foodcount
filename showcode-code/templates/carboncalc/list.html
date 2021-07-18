@@ -124,6 +124,7 @@ function update() {
                 <td>{{item['foodname']}}</td>
                 <td>{{"%d" %(item['quantity'])}}</td>
                 <td>{{"%d" %(item['carboncost'])}}</td>
+                <td><form method="post", name="a"><input type="submit" value="Use Alternative" name="Use_Alternative"/></form></td>
             </tr>
             {% endfor %}
         </table>

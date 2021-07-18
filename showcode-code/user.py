@@ -1,7 +1,6 @@
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
 )
-
 from .db import get_db
 from .auth import login_required
 
@@ -32,3 +31,13 @@ def load_logged_in_user():
         g.user = get_db().execute(
             'SELECT * FROM USERS WHERE id = ?', (user_id,)
         ).fetchone()
+
+import requests
+import json
+
+@bp.route("/testbonAPI")
+def bonAPI():
+    BONAPI_API_KEY = "bdec218560cbe2ab59aa2737f090cbc11280bb62"
+    response = requests.get("https://www.bon-api.com/api/v1/ingredient/alternatives", headers={"Authorization": "Token " + BONAPI_API_KEY, "Content-type":"application/json"}, data="{\"ingredients\":\"['50ml cow milk', '0.5 cups of white rice']\"}").text
+    unjsoned = json.loads(response)
+    return unjsoned
