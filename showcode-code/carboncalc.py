@@ -96,7 +96,7 @@ def use_alternative():
     original = db.execute(f"SELECT * FROM INGREDIENTS WHERE userid = \"{user_id}\" AND foodname = \"{original_ingredient}\"").fetchall()[0]
     alternative = alternatives[original_ingredient]
     alternative_co2 = co2[alternative] * int(original["quantity"])
-    return (1 - (co2[original_ingredient] * int(original["quantity"]) / alternative_co2)) * 100
+    original_co2 = original["carboncost"]
 
     
 
@@ -107,7 +107,7 @@ def use_alternative():
     db.execute(f'UPDATE USERS SET carbonsaved = {original_co2 - alternative_co2}, carboncost = {originalcarbon - original_co2 + alternative_co2} WHERE id = \"{user_id}\"')
 
     db.commit()    
-
+    return (1 - (co2[original_ingredient] * int(original["quantity"]) / alternative_co2)) * 100
     # update ingredient db
     # update user db
 
