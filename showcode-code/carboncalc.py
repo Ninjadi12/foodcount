@@ -81,3 +81,14 @@ def list():
 @login_required
 def home():
     return render_template('carboncalc/homepage.html', title = "Home")
+
+@bp.before_app_request
+def load_logged_in_user():
+    user_id = session.get('user_id')
+
+    if user_id is None:
+        g.user = None
+    else:
+        g.user = get_db().execute(
+            'SELECT * FROM USERS WHERE id = ?', (user_id,)
+        ).fetchone()
