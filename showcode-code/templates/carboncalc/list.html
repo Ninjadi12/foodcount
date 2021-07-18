@@ -30,21 +30,6 @@ var foods = {
     "Vegetables": ["Broccoli", "Cabbage", "Carrots", "Cucumbers", "Lettuce", "Onions", "Peppers", "Spinach", "Tomatoes"]
 }
 
-var co2 = {
-    "Butter": 12.1,
-    "Margarine": 3.3,
-    "Lamb": 39.2,
-    "Beef": 27,
-    "Cheddar Cheese": 13.5,
-    "Pork": 12.1,
-    "Turkey": 10.9,
-    "Chicken": 6.9,
-    "Lentils": 0.9,
-    "White Rice": 2.7,
-    "Brown Rice": 2.16
-}
-
-
 function setup_box() {
     var keys = Object.keys(foods);
     var type_box = document.getElementById("food_type");
@@ -137,7 +122,7 @@ function update() {
             <tr>
                 <td>{{item['foodname']}}</td>
                 <td>{{"%d" %(item['quantity'])}}g</td>
-                <td>{{item['carboncost']}}g</td>
+                <td>{{"%.1f" %(item['carboncost'])}}g</td>
             </tr>
             {% endfor %}
         </table>

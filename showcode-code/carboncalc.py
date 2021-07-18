@@ -24,6 +24,21 @@ def fetch_list():
     values = db.execute(f"SELECT * FROM INGREDIENTS WHERE userid = {session.get('user_id')}").fetchall()
     return values
 
+co2 = {
+    "Butter": 12.1,
+    "Margarine": 3.3,
+    "Lamb": 39.2,
+    "Beef": 27,
+    "Cheddar Cheese": 13.5,
+    "Pork": 12.1,
+    "Turkey": 10.9,
+    "Chicken": 6.9,
+    "Lentils": 0.9,
+    "White Rice": 2.7,
+    "Brown Rice": 2.16
+}
+
+
 @bp.route("/list", methods=('GET', 'POST'))
 @login_required
 def list():
@@ -34,14 +49,14 @@ def list():
         food_type = request.form['food_type']
         food_name = request.form['food_name']
         quantity = request.form['quantity']
-
+        food_co2 = co2[food_name] * int(quantity)
 
         
         db = get_db()
         
         db.execute(
             'INSERT INTO INGREDIENTS (foodtype, foodname, quantity, carboncost, userid) VALUES (?, ?, ?, ?, ?)',
-            (food_type, food_name, quantity, 0,  session.get('user_id'))
+            (food_type, food_name, quantity, food_co2,  session.get('user_id'))
         )
         db.commit()
         
