@@ -28,11 +28,13 @@
     border-radius: 15px;
 }
 .box-me{
-    background-color: rgb(179, 187, 179);
+    background-color: #f5eeff;
 }
 .fill{
     min-height: 100%; 
 }
+
+.jumbotron
 
 #initial {
     display: flex;
