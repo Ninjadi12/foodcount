@@ -30,10 +30,9 @@ def create_app(test_config=None):
     from . import db
     db.init_app(app)
 
-    from . import auth, carboncalc, user
+    from . import auth, carboncalc
     app.register_blueprint(auth.bp)
     app.register_blueprint(carboncalc.bp)
-    app.register_blueprint(user.bp)
 
     @app.route('/')
     @app.route('/initial')

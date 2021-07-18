@@ -14,21 +14,6 @@ BONAPI_API_KEY = "bdec218560cbe2ab59aa2737f090cbc11280bb62"
 
 bp = Blueprint('carboncalc', __name__, url_prefix='/carboncalc')
 
-
-
-""""@bp.route("/leaderboard")
-@login_required
-def leaderboard():
-    pic1 = os.path.join("../" + current_app.config['UPLOAD_FOLDER'], 'logo.png')
-    pic2 = os.path.join("../" + current_app.config['UPLOAD_FOLDER'], 'badge.png')
-    pic3 = os.path.join("../" + current_app.config['UPLOAD_FOLDER'], 'coin.png')
-
-    db = get_db()
-    standings = db.execute('SELECT name, carboncost, carbonsaved FROM USERS WHERE carboncost > 0 ORDER BY carboncost ASC LIMIT 10;').fetchall()
-    requests.post("https://test.eaternity.ch/api/", headers = {"authorization": "Basic aDRjSzR0SDBOT2c3NUhqZkszMzlLbE9scGEzOWZKenhYdw==", "Content-Type":"application/json"})
-    pic1 = os.path.join("../" + current_app.config['UPLOAD_FOLDER'], 'logo.png')
-    return render_template("carboncalc/leaderboard.html", standings=standings, coin=pic3, title = "FUCounter | Leaderboard", logo= pic1)
-"""
 def fetch_list():
     db = get_db()
     values = db.execute(f"SELECT * FROM INGREDIENTS WHERE userid = {session.get('user_id')}").fetchall()
