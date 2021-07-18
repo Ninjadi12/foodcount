@@ -42,7 +42,9 @@ co2 = {
 
 alternatives = {
     "Butter": "Margarine",
-
+    "White Rice": "Brown Rice",
+    "Beef": "Pork",
+    "Turkey": "Chicken"
 }
 
 def get_avg_carbon():
