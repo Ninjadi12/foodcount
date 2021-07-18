@@ -14,7 +14,9 @@ BONAPI_API_KEY = "bdec218560cbe2ab59aa2737f090cbc11280bb62"
 
 bp = Blueprint('carboncalc', __name__, url_prefix='/carboncalc')
 
-@bp.route("/leaderboard")
+
+
+""""@bp.route("/leaderboard")
 @login_required
 def leaderboard():
     pic1 = os.path.join("../" + current_app.config['UPLOAD_FOLDER'], 'logo.png')
@@ -26,7 +28,7 @@ def leaderboard():
     requests.post("https://test.eaternity.ch/api/", headers = {"authorization": "Basic aDRjSzR0SDBOT2c3NUhqZkszMzlLbE9scGEzOWZKenhYdw==", "Content-Type":"application/json"})
     pic1 = os.path.join("../" + current_app.config['UPLOAD_FOLDER'], 'logo.png')
     return render_template("carboncalc/leaderboard.html", standings=standings, coin=pic3, title = "FUCounter | Leaderboard", logo= pic1)
-
+"""
 def fetch_list():
     db = get_db()
     values = db.execute(f"SELECT * FROM INGREDIENTS WHERE userid = {session.get('user_id')}").fetchall()
@@ -165,7 +167,11 @@ def home():
     pic1 = os.path.join("../" + current_app.config['UPLOAD_FOLDER'], 'logo.png')
     pic2 = os.path.join("../" + current_app.config['UPLOAD_FOLDER'], 'badge.png')
     pic3 = os.path.join("../" + current_app.config['UPLOAD_FOLDER'], 'coin.png')
-    return render_template('carboncalc/homepage.html', title = "FUCounter | Home", logo = pic1, Badge = pic2, coin=pic3)
+
+    db = get_db()
+    standings = db.execute('SELECT name, carboncost, carbonsaved FROM USERS WHERE carboncost > 0 ORDER BY carboncost ASC LIMIT 10;').fetchall()
+    
+    return render_template('carboncalc/homepage.html', title = "FUCounter | Home", logo = pic1, Badge = pic2, coin=pic3, standings=standings)
 
 @bp.before_app_request
 def load_logged_in_user():
