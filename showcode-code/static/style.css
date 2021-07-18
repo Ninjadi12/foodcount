@@ -1,10 +1,11 @@
 :root{
-    --greenish : rgb(165, 190, 166);
+    --purpley : #e4d4fb;
+    --buttoncol: #FF3E41;
 }
 
 .btn-primary {
-    background-color: rgb(69,27,4);
-    border-color: rgb(31, 12, 2);
+    background-color: var(--buttoncol);
+    border-color: var(--buttoncol);
 }
 
 #login-button{
@@ -12,7 +13,7 @@
     margin-top: 5vh;
     width:20vh;
     padding: 7px 10px; 
-    border-radius: 25px;
+    border-radius: 15px;
 }
 
 #register-button{
@@ -20,9 +21,11 @@
     margin-top: 1vh;
     width: 20vh;
     padding: 7px 10px; 
-    border-radius: 25px;
+    border-radius: 15px;
 }
-
+.box-me{
+    background-color: rgb(179, 187, 179);
+}
 .fill{
     min-height: 100%; 
 }
@@ -42,7 +45,7 @@
 body {
     display:flex;
     min-height: 100%;
-    background: var(--greenish);
+    background: var(--purpley);
 }
 
 html {
