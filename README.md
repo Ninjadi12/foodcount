@@ -3,3 +3,6 @@ A project to better track and save the carbon you use. Gamified with a leaderboa
 
 # Showcode level up society hackathon
 This is a repository for the showcode level up society &amp; gamification hackathon
+
+# Devpost Link
+https://devpost.com/software/foodcount
